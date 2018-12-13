@@ -18,7 +18,7 @@ class CLibEventModule{
 public:
 	CLibEventModule();
 	int Init();
-	int Start(const char* pIpAddress, int& nPort);
+	int Start(const char* pIpAddress, int& nPort, bool bThreaded = true);
 	enum{
 		ERROR_OK,
 		ERROR_INIT,

@@ -47,7 +47,7 @@ int CLibEventModule::Init()
 	return ERROR_OK;
 }
 
-int CLibEventModule::Start(const char* pIpAddress, int& nPort)
+int CLibEventModule::Start(const char* pIpAddress, int& nPort, bool bThreaded)
 {
 	struct sockaddr_in sockaddrIn;
 	memset(&sockaddrIn, 0, sizeof(struct sockaddr_in));
@@ -76,8 +76,10 @@ int CLibEventModule::Start(const char* pIpAddress, int& nPort)
 		10, \
 		(struct sockaddr*)&sockaddrIn6, \
 		sizeof(sockaddrIn6));
-
-	CreateThread(0, 0, (LPTHREAD_START_ROUTINE)WorkThread, this, 0, 0);
+	if (bThreaded)
+		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)WorkThread, this, 0, 0);
+	else
+		Work();
 	return ERROR_OK;
 }
 
